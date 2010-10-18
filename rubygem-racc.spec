@@ -7,7 +7,7 @@
 Summary: Racc is a LALR(1) parser generator
 Name: rubygem-%{gemname}
 Version: 1.4.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group: Development/Languages
 License: GPLv2+ or Ruby
 URL: http://racc.rubyforge.org/
@@ -37,6 +37,8 @@ gem install --local --install-dir ./%{gemdir} \
 rm -rf ./%{gemdir}/ext/
 rm -f ./%{gemdir}/{.autotest,.require_paths}
 cp -a ./%{gemdir}/* %{buildroot}%{gemdir}
+sed -i 's/\/usr\/local\/bin\/ruby/\/usr\/bin\/env ruby/' %{buildroot}/%{geminstdir}/bin/y2racc
+sed -i 's/\/usr\/local\/bin\/ruby/\/usr\/bin\/env ruby/' %{buildroot}/%{geminstdir}/bin/racc2y
 mv %{buildroot}%{gemdir}/bin/* %{buildroot}/%{_bindir}
 rmdir %{buildroot}%{gemdir}/bin
 find %{buildroot}%{geminstdir}/bin -type f | xargs chmod a+x
@@ -56,5 +58,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Oct 18 2010 : Sergio Rubio <rubiojr@frameos.org> - 1.4.6-2
+- Fix shbang in bin scripts
+
 * Mon Oct 18 2010 : Sergio Rubio <rubiojr@frameos.org> - 1.4.6-1
 - Initial package
